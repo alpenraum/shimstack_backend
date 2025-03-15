@@ -49,3 +49,5 @@ dependencies {
     implementation("io.insert-koin:koin-annotations")
     ksp("io.insert-koin:koin-ksp-compiler:2.0.0")
 }
+
+ksp { arg("KOIN_DEFAULT_MODULE", "true") }

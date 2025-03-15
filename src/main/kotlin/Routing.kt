@@ -1,27 +1,22 @@
 package com.alpenraum
 
-import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.application.*
-import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
-import io.ktor.server.html.*
-import io.ktor.server.metrics.micrometer.*
-import io.ktor.server.plugins.callid.*
-import io.ktor.server.plugins.calllogging.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.plugins.csrf.*
-import io.ktor.server.plugins.doublereceive.*
-import io.ktor.server.plugins.httpsredirect.*
-import io.ktor.server.plugins.openapi.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import io.ktor.server.websocket.*
-import io.ktor.websocket.*
-import io.micrometer.prometheus.*
-import kotlinx.html.*
-import org.slf4j.event.*
+import com.alpenraum.controller.Controller
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.html.respondHtml
+import io.ktor.server.plugins.doublereceive.DoubleReceive
+import io.ktor.server.request.receiveText
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
+import io.ktor.server.routing.routing
+import kotlinx.html.body
+import kotlinx.html.h1
+import kotlinx.html.head
+import kotlinx.html.li
+import kotlinx.html.ul
+import kotlinx.html.unsafe
+import org.koin.java.KoinJavaComponent.getKoin
 
 fun Application.configureRouting() {
     install(DoubleReceive)
@@ -38,6 +33,12 @@ fun Application.configureRouting() {
     routing {
         get("/html-dsl") {
             call.respondHtml {
+                head {
+                    unsafe {
+                        +""" <link rel="stylesheet" type="text/css" href="/static/style.css">
+                    <script src="/static/script.js"></script>"""
+                    }
+                }
                 body {
                     h1 { +"HTML" }
                     ul {
@@ -46,6 +47,15 @@ fun Application.configureRouting() {
                         }
                     }
                 }
+            }
+        }
+    }
+    routing {
+        val controllers: List<Controller> = getKoin().getAll()
+
+        controllers.forEach {
+            with(it) {
+                this@routing.buildControllerRoute()
             }
         }
     }

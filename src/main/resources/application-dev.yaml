@@ -1,5 +1,5 @@
 ktor:
-    development: false
+    development: true
     application:
         modules:
             - com.alpenraum.ApplicationKt.module

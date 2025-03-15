@@ -4,17 +4,17 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
-import org.koin.ksp.generated.module
+import org.koin.ksp.generated.defaultModule
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 
 fun Application.configureKoin() {
     install(Koin) {
         slf4jLogger()
-        modules(ShimstackBackendGeneratedModule().module)
+        modules(defaultModule)
     }
 }
 
 @Module
-@ComponentScan
+@ComponentScan("com.aplenraum")
 class ShimstackBackendGeneratedModule
