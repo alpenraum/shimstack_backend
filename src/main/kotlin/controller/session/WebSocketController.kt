@@ -1,5 +1,6 @@
-package com.alpenraum.controller
+package com.alpenraum.controller.session
 
+import com.alpenraum.controller.Controller
 import io.ktor.server.auth.authenticate
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.route
