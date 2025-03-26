@@ -24,11 +24,6 @@ fun Application.configureRouting() {
         get("/") {
             call.respondText("Hello World!")
         }
-        post("/double-receive") {
-            val first = call.receiveText()
-            val theSame = call.receiveText()
-            call.respondText(first + " " + theSame)
-        }
     }
     routing {
         get("/html-dsl") {
