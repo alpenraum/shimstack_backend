@@ -6,54 +6,6 @@ info:
 servers:
 - url: "https://shimstack_backend"
 paths:
-  /ws:
-    get:
-      description: ""
-      parameters:
-      - name: "Connection"
-        in: "header"
-        required: true
-        description: "Websocket Connection parameter"
-        schema:
-          type: "string"
-      - name: "Upgrade"
-        in: "header"
-        required: true
-        description: "Websocket Upgrade parameter"
-        schema:
-          type: "string"
-      - name: "Sec-WebSocket-Key"
-        in: "header"
-        required: true
-        description: "Websocket Sec-WebSocket-Key parameter"
-        schema:
-          type: "string"
-      responses:
-        "101":
-          description: "Switching Protocols"
-          headers:
-            Connection:
-              required: true
-              schema:
-                type: "string"
-            Upgrade:
-              required: true
-              schema:
-                type: "string"
-            Sec-WebSocket-Accept:
-              required: true
-              schema:
-                type: "string"
-  /json/kotlinx-serialization:
-    get:
-      description: ""
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/Map_String"
   /:
     get:
       description: ""
@@ -67,16 +19,6 @@ paths:
               examples:
                 Example#1:
                   value: "Hello World!"
-  /double-receive:
-    post:
-      description: ""
-      responses:
-        "200":
-          description: "OK"
-          content:
-            text/plain:
-              schema:
-                type: "string"
   /html-dsl:
     get:
       description: ""
@@ -103,11 +45,6 @@ paths:
                 type: "string"
 components:
   schemas:
-    Map:
-      type: "object"
-      properties: {}
-    Map_String:
-      type: "string"
     Function1:
       type: "object"
       properties: {}

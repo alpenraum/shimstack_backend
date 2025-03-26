@@ -1,4 +1,4 @@
-package com.alpenraum.controller.session
+package com.alpenraum.controller.session.models
 
 import kotlinx.serialization.Serializable
 

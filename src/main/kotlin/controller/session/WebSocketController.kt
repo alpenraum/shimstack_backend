@@ -34,7 +34,12 @@ class WebSocketController : Controller {
                 }
             }
             webSocket("/observe/{sessionId}") {
-                TODO()
+                val sessionId = call.parameters["sessionId"] ?: run {
+                    call.respond(HttpStatusCode.BadRequest, "Missing sessionId")
+                    return@webSocket
+                }
+                val handler = ObserverSocketHandler(sessionId)
+                handler.handleWebSocket(this)
             }
         }
     }

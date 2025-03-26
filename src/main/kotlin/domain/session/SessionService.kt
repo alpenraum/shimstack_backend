@@ -10,10 +10,14 @@ import org.koin.core.annotation.Single
 class SessionService(
     private val sessionRepository: SessionRepository,
 ) {
-    fun getOrCreateSession(sessionId: String): StateFlow<List<RideUpdate>> =
+    fun getOrCreateSession(sessionId: String): StateFlow<SessionFlowDto> =
         sessionRepository.getSessionFlow(sessionId) ?: sessionRepository.createSession(sessionId)
 
     suspend fun emitUpdate(action: RideUpdate, sessionId: String) {
         sessionRepository.emitUpdate(action, sessionId)
+    }
+
+    suspend fun finishRide(sessionId: String) {
+        sessionRepository.finishRide(sessionId)
     }
 }

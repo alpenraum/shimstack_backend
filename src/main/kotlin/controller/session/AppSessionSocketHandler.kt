@@ -2,7 +2,10 @@ package com.alpenraum.controller.session
 
 import com.alpenraum.base.AppConfig
 import com.alpenraum.base.getLogger
+import com.alpenraum.controller.session.models.WebSocketAction
+import com.alpenraum.controller.session.models.WebSocketDto
 import com.alpenraum.domain.session.RideUpdate
+import com.alpenraum.domain.session.SessionFlowDto
 import com.alpenraum.domain.session.SessionService
 import io.ktor.websocket.*
 import kotlinx.coroutines.flow.*
@@ -19,7 +22,7 @@ class AppSessionSocketHandler(
     private val logger = getLogger(this::class.java)
 
     suspend fun handleWebSocket(session: DefaultWebSocketSession, expiration: Instant) {
-        val flow: StateFlow<List<RideUpdate>> = sessionService.getOrCreateSession(sessionId)
+        val flow: StateFlow<SessionFlowDto> = sessionService.getOrCreateSession(sessionId)
         try {
             for (frame in session.incoming) {
                 if (Instant.now().isAfter(expiration)) {
@@ -36,14 +39,19 @@ class AppSessionSocketHandler(
                                     session.outgoing.send(Frame.Text("Unknown command!"))
                                     continue
                                 }
-                                val response = flow.value.takeIf { it.isNotEmpty() }?.let { Json.encodeToString(it) }
-                                    ?: "no data found!"
+                                val response =
+                                    flow.value.takeIf { it is SessionFlowDto.Live && it.updates.isNotEmpty() }
+                                        ?.let { Json.encodeToString(it) }
+                                        ?: "no data found!"
                                 session.outgoing.send(Frame.Text(response))
                             }
 
                             WebSocketAction.RIDE_UPDATE -> {
                                 handleRideUpdate(input)
                             }
+
+                            WebSocketAction.RIDE_FINISHED -> sessionService.finishRide(sessionId)
+                            else -> {}
                         }
 
                     }
