@@ -48,6 +48,7 @@ dependencies {
     implementation(platform("io.insert-koin:koin-annotations-bom:2.0.0"))
     implementation("io.insert-koin:koin-annotations")
     ksp("io.insert-koin:koin-ksp-compiler:2.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
 }
 
 ksp { arg("KOIN_DEFAULT_MODULE", "true") }
