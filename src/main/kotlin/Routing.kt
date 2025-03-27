@@ -26,26 +26,6 @@ fun Application.configureRouting() {
         }
     }
     routing {
-        get("/html-dsl") {
-            call.respondHtml {
-                head {
-                    unsafe {
-                        +""" <link rel="stylesheet" type="text/css" href="/static/style.css">
-                    <script src="/static/script.js"></script>"""
-                    }
-                }
-                body {
-                    h1 { +"HTML" }
-                    ul {
-                        for (n in 1..10) {
-                            li { +"$n" }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    routing {
         val controllers: List<Controller> = getKoin().getAll()
 
         controllers.forEach {
@@ -54,4 +34,5 @@ fun Application.configureRouting() {
             }
         }
     }
+    htmlObserver()
 }

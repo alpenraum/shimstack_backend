@@ -12,3 +12,5 @@ jwt:
   secret: "this is a wittle tiny secwet uwu"
 auth:
   secret: "dev_secret"
+html:
+  webSocketUrl: "ws://localhost:8080/ws/observe/"

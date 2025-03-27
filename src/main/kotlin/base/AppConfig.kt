@@ -20,4 +20,5 @@ class AppConfig {
     val jwtRealm: String get() = config.property("jwt.realm").getString()
     val authSecret: String get() = config.property("auth.secret").getString()
     val jwtSecret: String get() = config.property("jwt.secret").getString()
+    val webSocketUrl: String get() = config.property("html.webSocketUrl").getString()
 }
