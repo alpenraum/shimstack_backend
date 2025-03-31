@@ -1,3 +1,48 @@
-body{
-    background-color: coral;
+/* Light mode */
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: #FDFDF5;
+        color: #1A1C18;
+    }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1A1C18;
+        color: #E3E3DC;
+    }
+}
+
+.chart text {
+    font-family: sans-serif;
+}
+
+.chart {
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px;
+    text-align: center;
+}
+
+#chart-root {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    flex-direction: column;
+
+}
+
+svg {
+    width: 80vw;
+    min-width: 600px; /* Ensures charts are not too small on small screens */
+    height: 300px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+}
+
+* {
+    font-family: sans-serif;
 }

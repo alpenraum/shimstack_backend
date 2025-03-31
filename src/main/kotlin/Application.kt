@@ -25,3 +25,4 @@ fun Application.module() {
     configureHTTP()
     configureRouting()
 }
+

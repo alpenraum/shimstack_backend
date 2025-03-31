@@ -21,16 +21,51 @@ fun Application.htmlObserver() {
                 head {
                     unsafe {
                         +""" <link rel="stylesheet" type="text/css" href="/static/style.css">
-                    <script src="/static/script.js"></script>"""
+                            <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+                            <script src="/static/script.js"></script>
+                            <link rel="icon" type="image/png" href="/static/favicon/favicon-96x96.png" sizes="96x96" />
+                            <link rel="icon" type="image/svg+xml" href="/static/favicon/favicon.svg" />
+                            <link rel="shortcut icon" href="/static/favicon/favicon.ico" />
+                            <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png" />
+                            <link rel="manifest" href="/static/favicon/site.webmanifest" />"""
                     }
                 }
                 body {
                     onLoad = "siteLoaded('$sessionId','${appConfig.webSocketUrl}')"
-                    h1 { +"HTML" }
-                    ul {
-                        for (n in 1..10) {
-                            li { +"$n" }
+                    h1 {
+                        id = "title"
+                        +"HTML"
+                    }
+                    div {
+                        id = "chart-root"
+                        div(classes = "chart") {
+                            id = "speed-chart"
                         }
+                        div(classes = "chart") {
+                            id = "elevation-chart"
+                        }
+                        div(classes = "chart") {
+                            id = "distance-chart"
+                        }
+                    }
+                    unsafe {
+                        +"""
+                            <div id="containerVis"></div>
+                            
+                            
+                            <table id="table">
+                            <thead>
+                                <tr>
+                                    <th>Received RideUpdate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            </table>
+                        """.trimIndent()
+                    }
+                    table {
+                        id = "table"
                     }
                 }
             }
